@@ -3,6 +3,7 @@ package com.npsolutions.productsserver.service;
 import com.npsolutions.productsserver.model.Category;
 import com.npsolutions.productsserver.model.Product;
 import com.npsolutions.productsserver.repository.IProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService implements IProductService {
 
     //    Inyectar dependencias de mi repositorio
-    @Autowired
-    private IProductRepository productRepo;
+
+
+    private final IProductRepository productRepo;
 
     @Override
     public List<Product> findByCategory(Category category) {
