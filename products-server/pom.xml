@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.npsolutions</groupId>
-	<artifactId>products-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>products-service</artifactId>
+	<version>0.0.1</version>
 	<name>products-server</name>
 	<description>Tienda de Electrodemesticos</description>
 	<properties>
