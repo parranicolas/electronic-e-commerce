@@ -1,17 +1,14 @@
 package com.npsolutions.productsserver.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Getter@Setter
+import java.util.Date;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class Product {
 
@@ -20,7 +17,18 @@ public class Product {
     private Long prod_id;
     private String prod_name;
     private String prod_brand;
-    private String prod_price;
+    private String prod_desc;
+    private Double prod_price;
+    private Double prod_stock;
+    private String prod_status;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date create_at;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category prod_category;
+
 
 
 }
