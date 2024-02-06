@@ -4,7 +4,6 @@ import com.npsolutions.productsserver.model.Category;
 import com.npsolutions.productsserver.model.Product;
 import com.npsolutions.productsserver.repository.IProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,31 +19,32 @@ public class ProductService implements IProductService {
 
     private final IProductRepository productRepo;
 
+    //Busca un producto por el id de una categoria dada
     @Override
     public List<Product> findByCategory(Category category) {
         List<Product> productList = productRepo.findAll();
         List<Product> productListByCategory = new ArrayList<>();
         for (Product prod:productList){
-            if(prod.getProd_category().equals(category)){
+            if(prod.getProd_category().getCat_id().equals(category.getCat_id())){
                 productListByCategory.add(prod);
             }
         }
 
-
-
         return productListByCategory;
     }
+//    Trae todos los productos en una collection
     @Override
     public List<Product> getProducts() {
         return productRepo.findAll();
     }
 
+//    Crear un nuevo producto
     @Override
-    public String createProduct(Product product) {
+    public Product createProduct(Product product) {
         product.setProd_status("CREATED");
         product.setCreate_at(new Date());
-        productRepo.save(product);
-        return "Producto creado correctamente.";
+        return productRepo.save(product);
+
     }
 
     @Override
@@ -52,21 +52,23 @@ public class ProductService implements IProductService {
         return productRepo.findById(product_id).orElse(null);
     }
 
+//    Eliminar un producto cambiando su estado, no eliminandolo de la DB
     @Override
-    public String deleteProduct(Long product_id) {
+    public Product deleteProduct(Long product_id) {
         Product prod = getProductById(product_id);
         if(null == prod){
             return null;
         }
         prod.setProd_status("DELETED");
-        productRepo.save(prod);
 
-        return "Producto eliminado correctamente";
+
+        return productRepo.save(prod);
     }
 
+//    Se edita un producto pasando un id, y un producto nuevo
     @Override
-    public String editProduct(Long product_id, Product product) {
-        Product prod = getProductById(product_id);
+    public Product editProduct(Product product) {
+        Product prod = getProductById(product.getProd_id());
         if(null == prod){
             return null;
         }
@@ -76,11 +78,12 @@ public class ProductService implements IProductService {
         prod.setProd_price(product.getProd_price());
         prod.setProd_category(product.getProd_category());
 
-        productRepo.save(prod);
 
-        return "Producto editado correctamente.";
+
+        return productRepo.save(prod);
     }
 
+    //Se actualiza el stock dando un id del producto a modificar
     @Override
     public Product updateStock(Long product_id, Double quantity) {
         Product prod = getProductById(product_id);
