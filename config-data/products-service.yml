@@ -9,7 +9,7 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
   datasource:
-    url: jdbc:mysql://localhost:3308/users_service
+    url: jdbc:mysql://localhost:3308/products_service
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
